@@ -1,0 +1,168 @@
+/* Media Query 1170px */
+@media (max-width:1170px) {
+    /* General CSS */
+    .section-subtitle{
+        max-width: 60%;
+    }
+
+    /* 02 Banner Section */
+    .banner_section .carousel-item{
+        height: 90vh;
+    }
+}
+
+/* Media Query 991px */
+@media (max-width:991px) {
+    /* General CSS */
+    /* .about .banner_section,
+    .product .banner_section,
+    .gallery .banner_section,
+    .contact .banner_section{
+    padding-top: 12.5rem;
+    padding-bottom: 3rem;
+} */
+    /* 01 Navbar CSS */
+    .header .navbar{
+        background-size: cover;
+        padding: 2rem;
+    }
+    .header .navbar-nav{
+        margin-top:2rem;
+    }
+    .header .navbar-nav .nav-link{
+        padding: 0.2rem 0.5rem;
+        margin-bottom: 1rem;
+    }
+    .header .header_right .contact{
+        padding: 0.2rem 0.5rem;
+    }
+    .hero .carousel-heading-topics{
+        font-size: 30px;
+        font-weight: 600;
+    }
+    .hero .carousel-topics p{
+        font-size: 1.4rem;
+        line-height: 1.5;
+    }
+}
+
+/* Media Query 767px */
+@media (max-width:767px) {
+    /* General CSS */
+    body,html{
+        font-size:8px;
+    }
+    .section-subtitle{
+        max-width:  80%;
+    }
+
+    /* 02 Banner Section */
+    .banner_section{
+        min-height: 70vh;
+    }
+
+    .banner_section .carousel-item{
+        .banner_section .carousel-item{
+            height: 70vh;
+        }
+    }
+    .hero .carousel-heading-topics{
+        font-size: 27px;
+        font-weight: 550;
+        width: 300px;
+    }
+    .hero .carousel-topics p{
+        font-size: 1.3rem;
+        line-height: 1.4;
+    }
+    .hero .carousel-topics{
+        margin-top:100px;
+    }
+    .fa-2x{
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width:500px) {
+    /* General CSS */
+    body,html{
+        font-size:7px;
+    }
+    .hero .carousel-heading-topics{
+        font-size: 16px;
+        font-weight: 400;
+        width: 250px;
+        margin-bottom: 4px;
+    }
+    .hero .carousel-topics p{
+        font-size: 1.2rem;
+        line-height: 1.3;
+        margin-top:1px;
+    }
+    .hero .carousel-topics{
+        margin-top:90px;
+    }
+    .main-btn{
+        border: 0.1rem solid var(--bg-white);
+        border-radius: 1rem;
+        padding:0.3rem 0.8rem;
+        font-weight: 300;
+        font-size: 1.1rem;
+        letter-spacing: 0.13rem;
+    }
+    .main-btn:hover{
+        border:0.1rem solid var(--secondary-color);
+    }
+    .fa-2x{
+        font-size: 1em;
+    }
+    
+}
+
+@media (max-width:350px) {
+    /* General CSS */
+    body,html{
+        font-size:6px;
+    }
+    .hero .carousel-heading-topics{
+        font-size: 12px;
+        font-weight: 200;
+        width: 200px;
+        margin-bottom: 3px;
+    }
+    .hero .carousel-topics p{
+        font-size: 8px;
+        line-height: 1.3;
+
+    }
+    .hero .carousel-indicators{
+        bottom: -10rem;
+    }
+    .hero .carousel-topics{
+        text-align: justify;
+        width:50%;
+        
+    }
+    .main-btn{
+        border: 0.1rem solid var(--bg-white);
+        border-radius: 1rem;
+        padding:0.2rem 0.7rem;
+        font-weight: 200;
+        font-size: 1rem;
+        letter-spacing: 0.12rem;
+    }
+    .main-btn:hover{
+        border:0.1rem solid var(--secondary-color);
+    }
+    .test{
+        font-size: 16px;
+        }
+    .link-widget{
+            font-size: 16px;
+        }
+    .fa-2x{
+        font-size: 1em;
+    }
+}
+
+  

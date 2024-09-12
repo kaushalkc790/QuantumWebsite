@@ -1,0 +1,32 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "main.cshtml";
+}
+<section>
+        <div class="bannerSingle img-fluid">
+            <div class="message-topics">
+                <h2 class="message-heading-topics">@Model.Value("bannerTitle")</h2>
+                <p>@Model.Value("bannerDescribe")</p>
+            </div>
+        </div>
+</section>
+
+<section id="since2050-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-12 mb-4">
+                @{
+                        var historyImage = Model.Value<IPublishedContent>("historyImage");
+                }
+                <img src="@(historyImage?.Url())" class="img-fluid" alt="description">
+            </div>
+            <div class="col-lg-6 col-12 mb-4">
+                <div class="since2050-details">
+                    <h3 style="text-decoration:underline">@Model.Value("historyHead")</h3>
+                    @Model.Value("historyBody")
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

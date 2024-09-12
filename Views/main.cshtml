@@ -1,0 +1,258 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Web
+@inject IUmbracoContextAccessor umbracoContextAccessor
+@using ContentModels = QuantumWebsite.Models;
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quantum Website</title>
+
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" />
+
+    <!-- Font Awesome 5 CDN -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        @{
+            var bannerImage = Model.Value<IPublishedContent>("bannerImage");
+        }
+    /* Pseudo-element for background image with opacity */
+.bannerSingle::before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-image: url('@bannerImage?.Url()'); /* Background image URL */
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+opacity: 0.2; /* Adjust opacity as needed */
+z-index: 1; /* Place behind content */
+}
+    </style>
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+</head>
+<body>
+    <!-- Navbar Section start-->
+    <header id="full_nav">
+        <div class="header">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg">
+                    <a class="navbar-brand" href="#">
+                        @{
+                            var logo = Model.Value<IPublishedContent>("navigationLogo", fallback: Fallback.ToAncestors);
+                        }
+                        <img src="@(logo?.Url())" />
+                    </a>
+                    <button class="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav"
+                            aria-controls="navbarNav"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation">
+
+                        <i class="fas fa-stream navbar-toggler-icon"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+
+                        @{
+                                var selection = Umbraco.ContentAtRoot().FirstOrDefault()
+                                    .Children()
+                                    .Where(x => x.IsVisible());
+
+                                var currentUrl = string.Empty;
+                                if (umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext))
+                                {
+                                    currentUrl = umbracoContext.PublishedRequest.PublishedContent.Url();
+                                }
+                        }
+    <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+            <a class="nav-link @(currentUrl == "/" ? "active" : "")" aria-current="page" href="/">Home</a>
+        </li>
+        @foreach (var item in selection)
+            {
+                if (!item.Name.Equals("Contact", StringComparison.OrdinalIgnoreCase))
+                {
+                    var hasChildren = item.Children().Any(x => x.IsVisible());
+
+                    <li class="nav-item @(hasChildren ? "has-submenu" : "")">
+                        <!-- Check if the item is the "About" page -->
+                        @if (item.Name.Equals("About", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <!-- Use javascript:void(0) to disable navigation for "About" page -->
+                            <a class="nav-link" href="javascript:void(0);">@item.Name()</a>
+                        }
+                        else
+                        {
+                            <a class="nav-link @(currentUrl == item.Url() ? "active" : "")" href="@item.Url()">
+                                @item.Name()
+                            </a>
+                        }
+                        @if (hasChildren && !item.Name.Equals("Events", StringComparison.OrdinalIgnoreCase)
+                            && !item.Name.Equals("Notice", StringComparison.OrdinalIgnoreCase)
+                            && !item.Name.Equals("Blogs", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <ul class="sub-menu">
+                                @foreach (var child in item.Children().Where(x => x.IsVisible() &&
+                                !(item.Name.Equals("About", StringComparison.OrdinalIgnoreCase) &&
+                                (x.Name.Equals("Why Us", StringComparison.OrdinalIgnoreCase) || x.Name.Equals("Facility", StringComparison.OrdinalIgnoreCase)))))
+                                {
+                                <li>
+                                    <a class="sub-menu-link @(currentUrl == child.Url() ? "active" : "")" href="@child.Url()">
+                                        @child.Name()
+                                    </a>
+                                </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            }
+        </ul>
+                <div class="header_right">
+                            <div class="text-lg-end contact">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                <span class="phone_no">@Model.Value("phoneNum", fallback: Fallback.ToAncestors)</span>
+                                <a class="btn main-btn btn-primary" href="/contact#contact-page">Contact</a>
+                            </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+</header>
+    <!-- Navbar Section End -->
+
+
+    @RenderBody()
+
+
+    <!-- Footer Section Start -->
+    <footer class="footer p-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-6 col-sm-12 col-lg-4">
+                    <div class="footer-widged mb-5 me-5">
+                        <h3 class="heading text-white">@Model.Value("footer1", fallback: Fallback.ToAncestors)</h3>
+                        <div class="block-1">
+                            <ul class="list-unstyled">
+                                <li class="list-item">
+                                    <span>
+                                        <i class="fa fa-map-marker me-3 fa-2x text-white" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="test text-white">
+                                        @Model.Value("footerLocation", fallback: Fallback.ToAncestors)
+                                    </span>
+                                </li>
+                                <li class="list-item">
+                                    <span>
+                                        <i class="fa fa-phone me-3 fa-2x text-white"></i>
+                                    </span>
+                                    <span class="test text-white">
+                                        @Model.Value("mobileNumber", fallback: Fallback.ToAncestors)
+                                    </span>
+                                </li>
+                                <li class="list-item">
+                                    <span>
+                                        <i class="fa fa-envelope me-3 fa-2x text-white"></i>
+                                    </span>
+                                    <span class="test text-white">
+                                        @Model.Value("footerEmail", fallback: Fallback.ToAncestors)
+                                    </span>
+                                </li>
+                                <li class="list-item">
+                                    <span>
+                                        <i class="fas fa-clock me-3 fa-2x text-white"></i>
+                                    </span>
+                                    <span class="test text-white">
+                                        @Model.Value("officeTime", fallback: Fallback.ToAncestors)
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-lg-4">
+                    <div class="footer-widged mb-5">
+                        <h3 class="heading text-white">@Model.Value("footer2", fallback: Fallback.ToAncestors)</h3>
+                        <!-- <ul class="link-widget p-0"> -->
+                        @{
+                                var select = Umbraco.ContentAtRoot().FirstOrDefault()
+                                .Children()
+                                .Where(x => x.IsVisible());
+                        }
+                        <ul class="link-widget p-0">
+                            <li>
+                                <a href="/">Home</a>
+                            </li>
+                            @foreach (var item in select)
+                                {
+                                    if (!item.Name.Equals("Contact", StringComparison.OrdinalIgnoreCase))
+                                       {
+                            <li>
+                                <a href="@item.Url()">@item.Name()</a>
+                            </li>
+
+                                        }
+                                }
+                        </ul>
+                        <!-- <li><a href="#">Home</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Page</a></li> -->
+                        <!-- </ul> -->
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12 col-lg-4">
+                    <div class="footer-widged mb-5">
+                        <h3 class="heading text-white">@Model.Value("footer3", fallback: Fallback.ToAncestors)</h3>
+                        <div class="social-icon">
+                            <div><a class="anchor" href="#"><span><i class="fab fa-facebook-f fa-2x text-white me-4"></i></span></a></div>
+                            <div><a class="anchor" href="#"><span><i class="fab fa-youtube fa-2x text-white me-4"></i></span></a></div>
+                            <div><a class="anchor" href="#"><span><i class="fab fa-instagram fa-2x text-white me-4"></i></span></a></div>
+                            <div><a class="anchor" href="#"><span><i class="fab fa-tiktok fa-2x text-white me-4"></i></span></a></div>
+                        </div>
+                        <div class="footer-contact">
+                            <a class="btn main-btn" href="/contact#contact-page">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </footer>
+    <div class="container-fluid copyright-section">
+        <p>
+            Copyright <a href="#">&#xa9; Quantum Infosis Pvt. Ltd. </a>All Rights
+            Reserved
+        </p>
+    </div>
+    <!-- Footer Section End -->
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap 5 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Custom JS -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

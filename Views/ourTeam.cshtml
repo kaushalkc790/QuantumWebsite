@@ -1,0 +1,54 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.OurTeam>
+@using ContentModels = QuantumWebsite.Models;
+@{
+	Layout = "main.cshtml";
+}
+<section>
+        <div class="bannerSingle img-fluid">
+            <div class="message-topics">
+                <h2 class="message-heading-topics">@Model.Value("bannerTitle")</h2>
+                <p>@Model.Value("bannerDescribe")</p>
+            </div>
+        </div>
+</section>
+
+<!-- Team1 section start -->
+<section class="Team-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center pb-5">
+                <h2 class="section-title pt-4">@Model.Value("teamTitle")</h2>
+                <p class="section-subtitle">
+                    @Model.Value("teamDescription")
+                </p>
+            </div>
+        </div>
+        <div class="row align-items-center py-5">
+            @{
+                     var blockList1 = Model.TeamCard;
+            }
+            @if (blockList1 != null)
+                {
+                    foreach (var block in blockList1)
+                    {
+                        if (block.Content is ContentModels.CardContent cardContent1)
+                        {                                
+                        <div class="col-lg-3 col-sm-6 mb-5">
+                            <div class="team-card align-items-center">
+                                <div class="team-img">
+                                    <img src="@cardContent1.Image.Url()" />
+                                </div>
+                                <div class="align-items-center">
+                                    <h4>@cardContent1.Title</h4><br>
+                                    <h5>@cardContent1.Description</h5>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    }
+                }
+        </div>
+    </div>
+</section>
+<!-- Team1 section end -->

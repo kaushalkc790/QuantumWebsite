@@ -1,0 +1,28 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "main.cshtml";
+}
+
+<!-- Notice  Item section start (Copy of Why Us)-->
+<section id="whyUsItem">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5 col-12 mb-4">
+                <h3 style="font-style:italic; text-align:center;margin-bottom:20px;">@Model.Value("title")</h3>
+
+                @{
+                        var image = Model.Value<IPublishedContent>("image");
+                }
+                <img src="@(image?.Url())" class="img-fluid" alt="description">
+            </div>
+            <div class="col-lg-7 col-12 mb-4 mt-4">
+                <div class="whyItemDescribe">
+                    <h4 style="font-style:italic;">@Model.Value("shortDescription")</h4>
+                    <p>@Model.Value("longDescription")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Notice Item end -->

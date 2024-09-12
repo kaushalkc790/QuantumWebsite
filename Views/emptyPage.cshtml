@@ -1,0 +1,77 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Newtonsoft.Json;
+@using QuantumWebsite.Models.ViewModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using System.Net.Http
+@using System.Net.Http.Headers
+
+
+@{
+    Layout = "main.cshtml";
+
+    //external api code start
+    var httpClient = new HttpClient();
+    httpClient.BaseAddress = new Uri("https://scoms-mobile-api.azurewebsites.net/scoms/api/1/news/notices");
+    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiOTgyNzMxNTM2OSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Imt1c2hhbGtjNzkwQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2dpdmVubmFtZSI6IkthdXNoYWwiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiTmlyb3VsYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiNjc2YTg3NDItYzk0NC00ZjZiLWIwYzMtZWMwMjYxMTVkMWI5IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIk9yZ24gQWRtaW4iLCJHZW5lcmFsIEVtcGxveWVlIiwiUGFyZW50cyIsIkVtcGxveWVlIl0sInRlbmFudFJvbGVzIjpbImU2ZDU5ZWZlLWIxNzQtNDM0My04NDQ2LTA4ZGMzZjdhODZjYyIsImNiNzBhYjQ1LWFhMmQtNDhjMi01ZDkxLTA4ZGM1NzllYWE3MSJdLCJUZW5hbnRJRCI6ImE0YzMwNGFkLTQ1ZDYtNDM5Ni1hNTY0LTliMjFkYmU5MDNiYSIsImV4cCI6MTcyNjYzODc2NywiaXNzIjoiTkVBUEVTIFBWVC4gTFRELiIsImF1ZCI6Imh0dHBzOi8vYXBpbmVhcGVzLmNvbS9hdXRob3JpemF0aW9uL2FwaS8xL2xvZ2luL3VzZXJsb2dpbiJ9.MBc2K6Wpu-wh7VdCe78af7ZHZlKAvWWBVyILQ1N3h6w");
+
+
+    var response = await httpClient.GetAsync(httpClient.BaseAddress);
+
+    var jsonData = await response.Content.ReadAsStringAsync();
+    var posts = JsonConvert.DeserializeObject<List<Post>>(jsonData);
+
+
+}
+
+<section>
+    <div class="bannerSingle img-fluid">
+        <div class="message-topics">
+            <h2 class="message-heading-topics">@Model.Value("bannerTitle")</h2>
+            <p>@Model.Value("bannerDescribe")</p>
+        </div>
+    </div>
+</section>
+
+
+<section>
+    @foreach(var post in posts)
+    {
+        <p>@post?.noticeId</p>
+        <p>@post?.saveDate</p>
+        <h5>@post?.title</h5>
+        <div>
+            @post?.notice
+        </div>
+    }
+</section>
+
+<!-- Empty section start -->
+<section class="emptyPage-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center">
+                <h2 class="section-title pt-4">@Model.Value("pageTitle")</h2>
+                <p class="section-subtitle">
+                    @Model.Value("pageSubTitle")
+                </p>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-12 mb-4">
+                @{
+                    var pageImage = Model.Value<IPublishedContent>("pageImage");
+                }
+                <img src="@(pageImage?.Url())" class="img-fluid" alt="page">
+            </div>
+            <div class="col-lg-6 col-12 mb-4">
+                    <div class="emptyPage-details">
+                        <p>@Model.Value("pageDescription")</p>
+                    </div>               
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Empty section end -->
+
+
+

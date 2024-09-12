@@ -1,0 +1,68 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.ContactPage>
+@using ContentModels = QuantumWebsite.Models;
+
+@{
+	Layout = "main.cshtml";
+}
+<section>
+    <div class="bannerSingle img-fluid">
+        <div class="message-topics">
+            <h2 class="message-heading-topics">@Model.Value("bannerTitle")</h2>
+            <p>@Model.Value("bannerDescribe")</p>
+        </div>
+    </div>
+</section>
+<!-- Contact Section Start -->
+
+<section id="contact-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-4 pb-4">
+                <h3 class="text-uppercase">@Model.Value("contactTitle")</h3>
+                <p>
+                    @Model.Value("contactDescription")
+                </p>
+
+                <div class="contact-info mt-4">
+                    <ul class="list-unstyled">
+                        <li class="list-item">
+                            <a href="#"><i class="fa fa-home"></i>@Model.Value("office")</a>
+                        </li>
+                        <li class="list-item">
+                            <a href="#">
+                                <i class="fa fa-map-marker"></i> @Model.Value("location")
+                            </a>
+                        </li>
+                        <li class="list-item">
+                            <a href="#"><i class="fa fa-phone"></i>@Model.Value("phone")</a>
+                        </li>
+                        <li class="list-item">
+                            <a href="#"><i class="fa fa-envelope"></i>@Model.Value("email")</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-3">
+
+                    @await Html.PartialAsync("_ContactUs", new QuantumWebsite.Models.ViewModels.ContactFormViewModel())
+
+                    
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3571.494666231681!2d87.28275137420349!3d26.472013278892792!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ef7468ee8f362b%3A0x5002c657a6f3a434!2sQuantum%20Infosys%20Pvt.%20Ltd.!5e0!3m2!1sen!2snp!4v1723445052820!5m2!1sen!2snp"
+                    width="600"
+                    height="450"
+                    style="border: 0"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+</section>
+<!-- Contact Section End -->

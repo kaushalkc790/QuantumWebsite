@@ -1,0 +1,185 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.ServicePage>
+@using ContentModels = QuantumWebsite.Models;
+@{
+	Layout = "main.cshtml";
+}
+//!!!!NOTE:: This Courses Page is Service Page in model and visual studio
+<section>
+    <div class="bannerSingle img-fluid">
+        <div class="message-topics">
+            <h2 class="message-heading-topics">@Model.Value("bannerTitle")</h2>
+            <p>@Model.Value("bannerDescribe")</p>
+        </div>
+    </div>
+</section>
+
+<!-- Course section start -->
+<section class="course-section">
+    <div class="container">
+
+        <div class="row align-items-center py-5">
+            <div class="col-lg-6 col-12 mb-4">
+                @{
+                     var preSchoolImage = Model.Value<IPublishedContent>("preSchoolImage");
+                }
+                <img src="@(preSchoolImage?.Url())" class="img-fluid" alt="description">
+            </div>
+            <div class="col-lg-6 col-12 mb-4">
+                <div class="about-content">
+                    <div class="course-title">
+                        <h3>@Model.Value("preSchoolTitle")</h3>
+                    </div>
+                    <div class="course-details">
+                        <p>@Model.Value("preSchoolDescription")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center py-5">
+            <div class="col-lg-6 col-12 mb-4 order-2 order-lg-1">
+                <div class="about-content">
+                    <div class="course-title">
+                        <h3>@Model.Value("elementaryTitle")</h3>
+                    </div>
+                    <div class="course-details">
+                        <p>@Model.Value("elementaryDescription")</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12 mb-4 order-1 order-lg-2">
+                @{
+                    var elementaryImage = Model.Value<IPublishedContent>("elementaryImage");
+                }
+                <img src="@(elementaryImage?.Url())" class="img-fluid" alt="description">
+            </div>
+        </div>
+
+
+        <div class="row align-items-center py-5">
+            <div class="col-lg-6 col-12 mb-4">
+                @{
+                    var middleSchool = Model.Value<IPublishedContent>("middleSchoolImage");
+                }
+                <img src="@(middleSchool?.Url())" class="img-fluid" alt="description">
+            </div>
+            <div class="col-lg-6 col-12 mb-4">
+                <div class="about-content">
+                    <div class="course-title">
+                        <h3>@Model.Value("middleSchoolTitle")</h3>
+                    </div>
+                    <div class="course-details">
+                        <p>@Model.Value("middleSchoolDescription")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row align-items-center py-5">
+            <div class="col-lg-6 col-12 mb-4 order-2 order-lg-1">
+                <div class="about-content">
+                    <div class="course-title">
+                        <h3>@Model.Value("secondaryTitle")</h3>
+                    </div>
+                    <div class="course-details">
+                        <p>@Model.Value("secondaryDescription")</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12 mb-4 order-1 order-lg-2">
+                @{
+                    var secondaryImage = Model.Value<IPublishedContent>("secondaryImage");
+                }
+                <img src="@(secondaryImage?.Url())" class="img-fluid" alt="description">
+            </div>
+        </div>
+
+
+
+
+    </div>
+</section>
+<!-- Course section end -->
+<!-- Client Section Start -->
+<section class="client-section">
+    <div class="container">
+        <div class="row pb-5">
+            <div class="col12 text-center mt-4">
+                <h2 class="section-title">@Model.Value("opinionTitle")</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-md-10">
+                <div id="carousel1ExampleIndicators"
+                     class="carousel slide"
+                     data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button"
+                                data-bs-target="#carousel1ExampleIndicators"
+                                data-bs-slide-to="0"
+                                class="active"
+                                aria-current="true"
+                                aria-label="Slide 1"></button>
+                        <button type="button"
+                                data-bs-target="#carousel1ExampleIndicators"
+                                data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                        <button type="button"
+                                data-bs-target="#carousel1ExampleIndicators"
+                                data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                        <button type="button"
+                                data-bs-target="#carousel1ExampleIndicators"
+                                data-bs-slide-to="3"
+                                aria-label="Slide 4"></button>
+                        <button type="button"
+                                data-bs-target="#carousel1ExampleIndicators"
+                                data-bs-slide-to="4"
+                                aria-label="Slide 5"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        @{
+                        var blockList = Model.ClientSlider;
+                        bool isFirst = true;
+                        }
+                        @if (blockList != null)
+                    {
+                        foreach (var block in blockList)
+                        {
+                            if (block.Content is ContentModels.OpinionSlider cardContent)
+                            {
+                        <div class="carousel-item @(isFirst ? "active" : "")">
+                            <div class="d-sm-flex row">
+                                <div class="profile-box col-sm-5">
+                                    <img src="@cardContent.Image.Url()"
+                                         class="img-fluid" />
+                                </div>
+                                <div class="card col-sm-7">
+                                    <div class="desc-box">
+                                        <p class="fst-italic">
+                                            @cardContent.Description
+                                        </p>
+                                        <div class="my-4">
+                                            <h4>@cardContent.Title</h4>
+                                            <h5 class="m-0">
+                                                @cardContent.SubTitle
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            isFirst = false;
+                            }
+                        }
+                }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Client Section End -->

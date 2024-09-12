@@ -1,0 +1,32 @@
+@model QuantumWebsite.Models.ViewModels.ContactFormViewModel
+
+@using (Html.BeginUmbracoForm("SubmitContactForm", "ContactUs"))
+{
+<div class="col-md-6 mb-4">
+    @Html.LabelFor(m => m.Name, new { @class="form-label" })
+    @Html.TextBoxFor(m => m.Name, new { @class="form-control" })
+</div>
+<div class="col-md-6 mb-4">
+    @Html.LabelFor(m => m.Email, new { @class="form-label" })
+    @Html.TextBoxFor(m => m.Email, new { @class="form-control" })
+</div>
+<div class="col-md-6 mb-4">
+    @Html.LabelFor(m => m.Address, new { @class="form-label" })
+    @Html.TextBoxFor(m => m.Address, new { @class="form-control" })
+
+</div>
+<div class="col-md-6 mb-4">
+    @Html.LabelFor(m => m.Number, new { @class="form-label" })
+    @Html.TextBoxFor(m => m.Number, new { @class="form-control" })
+</div>
+<div class="col-12 mb-4">
+    @Html.LabelFor(m => m.Message, new { @class="form-label" })
+    @Html.TextAreaFor(m => m.Message, new { @class="form-control" })
+</div>
+<div class="col-12 mb-4">
+    <button type="submit" class="btn main-btn">Send Message</button>
+</div>
+
+
+
+}

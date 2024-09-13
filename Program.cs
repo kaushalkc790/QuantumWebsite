@@ -1,7 +1,12 @@
+
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container, including the HTTP client for making API calls
 builder.Services.AddHttpClient();
+
+
+
 
 
 builder.CreateUmbracoBuilder()
@@ -32,3 +37,4 @@ app.UseUmbraco()
     });
 
 await app.RunAsync();
+

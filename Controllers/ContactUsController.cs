@@ -44,6 +44,11 @@ namespace QuantumWebsite.Controllers
 
             // Save and publish the content
             var result = contentService.SendToPublication(formSubmission);
+
+
+
+
+
             TempData["SuccessMessage"] = "Thank you for your message. We will get back to you soon!";
             
 

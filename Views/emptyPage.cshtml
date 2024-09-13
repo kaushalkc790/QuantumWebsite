@@ -20,7 +20,6 @@
     var jsonData = await response.Content.ReadAsStringAsync();
     var posts = JsonConvert.DeserializeObject<List<Post>>(jsonData);
 
-
 }
 
 <section>
@@ -33,17 +32,67 @@
 </section>
 
 
+<!-- Notice by API call Item section start (Copy of Why Us)-->
 <section>
-    @foreach(var post in posts)
-    {
-        <p>@post?.noticeId</p>
-        <p>@post?.saveDate</p>
-        <h5>@post?.title</h5>
-        <div>
-            @post?.notice
+    <div class="container">
+
+        <div class="row  align-items-center">
+           
+            @if (posts != null)
+            {
+                foreach (var post in posts)
+                {                   
+                        <div class="col-lg-5 col-12 mb-4">
+
+                            <div class="team-img">
+                            <!-- Trigger image for modal popUp -->
+                            @foreach (var url in post?.imageUrls)
+                            {
+                                <img style="height:250px; width:100%;object-fit: cover;cursor: pointer;" src="@url" class="img-fluid" data-bs-toggle="modal" data-bs-target="#_@post?.noticeId" alt="description" />
+                            }
+                         
+                            </div>
+                        </div>
+
+                    <div class="card team-card  align-items-center col-lg-7 col-12 mb-4 mt-4">
+                            
+                            <h3 style="font-style:italic; text-align:center;margin-bottom:20px;">@post?.title</h3>
+                            <div style="text-align:justify;">@Html.Raw(post?.notice)</div>
+                            <h6 style="font-style:italic;text-align:center;">@post?.createdDateTime</h6>
+                            
+                    </div>
+
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="_@post?.noticeId" tabindex="-1" aria-labelledby="_@post?.noticeId" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">@post?.title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="team-img">
+                                        @foreach (var url in post?.imageUrls)
+                                        {
+                                            <img  src="@url" class="img-fluid" alt="description" />
+                                        }
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            }
         </div>
-    }
+    </div>
 </section>
+    <!--Notice Item end -->
+    
+
 
 <!-- Empty section start -->
 <section class="emptyPage-section">
